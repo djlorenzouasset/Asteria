@@ -98,10 +98,7 @@ public class Program
     public static UserSettings LoadSettings() => JsonConvert.DeserializeObject<UserSettings>(File.ReadAllText("settings.json"));
 
 
-    public static void SaveSettings(UserSettings settings)
-    {
-        File.WriteAllText("settings.json", JsonConvert.SerializeObject(settings, Formatting.Indented));
-    }
+    public static void SaveSettings(UserSettings settings) => File.WriteAllText("settings.json", JsonConvert.SerializeObject(settings, Formatting.Indented));
 
 
     public static void CreateFolders()
@@ -121,6 +118,10 @@ public class Program
 
     public static string ? IsFFMpegInstalled() 
     {
+        // get the path of FFMpeg from the
+        // Environment variables situated
+        // in the pc. FFMpeg is required
+        // for the video generation
         string[] environmentsPaths = Environment.GetEnvironmentVariable("PATH").Split(";");
 
         foreach (string environmentsPath in environmentsPaths)
