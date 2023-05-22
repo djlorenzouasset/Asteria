@@ -34,7 +34,7 @@ dotnet build
 
 - When you completed these steps, the program will load local files and when finish you can insert a path for a Music Pack or an Emote (you search in Fortnite files with the help of <a href='https://github.com/4sval/FModel'>FModel</a>). Here is an example of the program when is ready to extract:
 
-<img src='https://raw.githubusercontent.com/djlorenzouasset/Asteria/master/.github/project-preview.png' alt="Asteria Program">
+<img src='https://github.com/djlorenzouasset/Asteria/blob/main/.github/project-preview.png' alt="Asteria Program">
 
 
 ## How can I change my settings?
@@ -56,8 +56,8 @@ The program basically extract emotes/music packs icons and music for make audio-
 
 - Image examples:
 
-<img src="https://raw.githubusercontent.com/djlorenzouasset/Asteria/master/.github/Athena_Emote_Bunny_Hop_02.png"> 
-<img src="https://raw.githubusercontent.com/djlorenzouasset/Asteria/master/.github/MusicPack_Showdown.png">
+<img src="https://github.com/djlorenzouasset/Asteria/blob/main/.github/Athena_Emote_Bunny_Hop_02.png"> 
+<img src="https://github.com/djlorenzouasset/Asteria/blob/main/.github/MusicPack_Showdown.png">
 
 
 In the <code>.output</code> folder will be saved the finished images and videos. In the <code>.cache</code> folder will be saved audios and jsons of the extracted objects!
