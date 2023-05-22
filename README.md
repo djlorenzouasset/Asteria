@@ -18,7 +18,7 @@ If you want contribute to the project, feel free to help!
 1. Download the source code or clone it with <a href='https://git-scm.com/download/win'>Git</a>.
 
 ```
-git clone https://github.com/djlorenzouasset/FortnitePaths
+git clone https://github.com/djlorenzouasset/Asteria
 ```
 
 2. Build the program
