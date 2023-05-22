@@ -18,7 +18,7 @@ If you want contribute to the project, feel free to help!
 1. Download the source code or clone it with <a href='https://git-scm.com/download/win'>Git</a>.
 
 ```
-git clone https://github.com/djlorenzouasset/Asteria
+git clone https://github.com/djlorenzouasset/Asteria -- recursive
 ```
 
 2. Build the program
