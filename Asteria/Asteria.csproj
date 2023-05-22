@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <ApplicationIcon>Resources\T-Soldier-Hero-RoseForm-L.ico</ApplicationIcon>
+	<FileVersion>1.0.0</FileVersion>
+	<Version>1.0.0</Version>
+	<AssemblyVersion>1.0.0</AssemblyVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="CUE4Parse\**" />
+    <EmbeddedResource Remove="CUE4Parse\**" />
+    <None Remove="CUE4Parse\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\T-Soldier-Hero-RoseForm-L.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Pastel" Version="4.1.0" />
+    <PackageReference Include="RestSharp" Version="110.2.0" />
+    <PackageReference Include="SkiaSharp" Version="2.88.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="CUE4Parse\CUE4Parse-Conversion\CUE4Parse-Conversion.csproj" />
+    <ProjectReference Include="CUE4Parse\CUE4Parse\CUE4Parse.csproj" />
+  </ItemGroup>
+
+</Project>
