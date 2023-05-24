@@ -149,7 +149,6 @@ public class Dataminer
             Console.WriteLine($"This cosmetic is not a Music Pack and not an Emote. Got \"{loggers.typeDefinition(exports.ExportType)}\", expected \"{loggers.typeDefinition("AthenaMusicPackItemDefinition")}\" or \"{loggers.typeDefinition("AthenaDanceItemDefinition")}\" istead.");
             Console.Write("Want to extract another file instead? (Y/N): ");
             askInError(Console.ReadLine());
-            Environment.Exit(0);
         }
     }
 
