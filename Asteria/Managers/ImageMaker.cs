@@ -1,23 +1,38 @@
 ﻿using SkiaSharp;
+using Serilog;
+
 
 namespace Asteria.Managers;
 
 public class ImageMaker
 {
     private string _image;
-    private string _background;
+    private string? _background;
     private string _saveIn;
+    private bool _useRarity;
 
-    public ImageMaker(string imageName, string background, string saveName)    
+    public ImageMaker(string imageName, string? background, string saveName, bool useRarity = false)    
     {
         _image = imageName;
         _background = background;
         _saveIn = Path.Combine(DirectoryManager.output, saveName + ".png");
+        _useRarity = useRarity;
     }
 
     public void MakeImage()
     {
-        SKBitmap? background = SKBitmap.Decode(_background);
+        SKBitmap? background;
+
+        if (_useRarity)
+        {
+            byte[]? rarityBg = Resources.Resource.ResourceManager.GetObject(_background) as byte[];
+            background = SKBitmap.Decode(rarityBg);
+        }
+        else
+        {
+            background = SKBitmap.Decode(_background);
+        }
+
         SKBitmap? icon = SKBitmap.Decode(_image); // this sometimes return null idk why
 
         var surface = SKSurface.Create(new SKImageInfo(background.Width, background.Height));
@@ -39,5 +54,6 @@ public class ImageMaker
             data.SaveTo(stream);
             stream.Close();
         }
+        Log.Information("Image saved in {path}", _saveIn);
     }
 }

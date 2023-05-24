@@ -1,4 +1,6 @@
 ﻿using RestSharp;
+using Serilog;
+
 
 using Asteria.Models;
 using Asteria.Managers;
@@ -22,6 +24,7 @@ public static class Requests
             return null;
         }
 
+        Log.Information("Successfull mappings reponse: 200");
         MappingsResponse[] mappings = response.Data;
         return mappings;
     }
@@ -35,6 +38,7 @@ public static class Requests
         var response = _client.DownloadData(request);
 
         File.WriteAllBytes(Path.Combine(DirectoryManager.mappings, mappingName), response);
+        Log.Information("Mappings saved in {path}", Path.Combine(DirectoryManager.mappings, mappingName));
     }
 
 
@@ -48,6 +52,7 @@ public static class Requests
         if (!response.IsSuccessStatusCode || string.IsNullOrEmpty(response.Content)) return new AesKeys();
 
         AesKeys keys = response.Data;
+        Log.Information("Successfull AES reponse: 200");
         return keys;
     }
 }

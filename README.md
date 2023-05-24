@@ -1,6 +1,6 @@
 # Asteria
 
-An open-source program that allow you to generate audio-videos of Music Packs and Emotes of Fortnite.
+An open-source program that allow you to generate audio-videos of Music Packs and Emotes of Fortnite (NOW WITH RARITIES BACKGROUNDS!).
 If you want contribute to the project, feel free to help! 
 
 > ⚠️ If you encounter problems, I ask you to open an issue in the repository so I can fix it.
@@ -30,7 +30,7 @@ dotnet build
 
 ## Settings
 
-- When the program opens, will ask for your <b>local installation of Fortnite</b>. Insert the path and press enter. After this, the program will ask for a <b>custom background</b> (1920x1080 if possible). You can find good backgrounds in high quality on <a href='https://fortnite.gg/assets?category=backgrounds'>Fortnite.GG</a>
+- When the program opens, will ask for your <b>local installation of Fortnite</b>. Insert the path and press enter. After this, the program will ask for a <b>custom background</b> (1920x1080 if possible). You can find good backgrounds in high quality on <a href='https://fortnite.gg/assets?category=backgrounds'>Fortnite.gg</a> or write "rarity" for use an automatic background based on the cosmetic rarity.
 
 - When you completed these steps, the program will load local files and when finish you can insert a path for a Music Pack or an Emote (you search in Fortnite files with the help of <a href='https://github.com/4sval/FModel'>FModel</a>). Here is an example of the program when is ready to extract:
 
@@ -41,10 +41,11 @@ dotnet build
 
 You can change your settings by opening the <code>settings.json</code> file.
 
-```json
+```jsonc
 {
   "path": "your_path_to_files",
-  "background": "your_path_to_background"
+  "background": "your_path_to_background",
+  "useRarity": false // depends if you want use a custom background or the cosmetic rarity
 }
 ```
 

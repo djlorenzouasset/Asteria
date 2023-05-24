@@ -4,11 +4,12 @@ using CUE4Parse.UE4.Versions;
 using CUE4Parse.MappingsProvider;
 using CUE4Parse.UE4.Objects.Core.Misc;
 using CUE4Parse.UE4.Assets.Exports;
+using CUE4Parse.UE4.Objects.UObject;
+using Serilog;
 
 using Asteria.Rest;
 using Asteria.Models;
 using Asteria.Manager;
-
 
 namespace Asteria.Managers;
 
@@ -19,11 +20,13 @@ public class Dataminer
 
     private string? ffmpeg;
     private string? bg_path;
+    private bool _useRarity;
 
-    public void Initialize(string mappings, string filesPath, string ffmpeg_path, string bgPath)
+    public void Initialize(string mappings, string filesPath, string ffmpeg_path, string? bgPath, bool useRarity)
     {
         ffmpeg = ffmpeg_path;
         bg_path = bgPath;
+        _useRarity = useRarity;
 
         Console.Write("Initializing provider.. ");
         Console.WriteLine($"Loading Paks files from local directory {loggers.pathDefinition(filesPath)}");
@@ -60,12 +63,11 @@ public class Dataminer
         {
             exports = _provider.LoadAllObjects(filePath).FirstOrDefault();
         }
-        catch (KeyNotFoundException) 
+        catch (KeyNotFoundException)
         {
             Console.Write($"No game file found for {loggers.pathDefinition(filePath)}. ");
             Console.Write("Want to extract another file instead? (Y/N): ");
             askInError(Console.ReadLine());
-            Environment.Exit(0);
         }
 
 
@@ -101,12 +103,34 @@ public class Dataminer
                 Environment.Exit(0);
             }
 
+            bool useRarity = false;
+
+            if (_useRarity)
+            {
+                useRarity = true;
+
+                if (exports.TryGetValue<UObject>(out var series, "Series"))
+                { 
+                    bg_path = series.Name;
+                }
+                else if (exports.TryGetValue<FName>(out var _rarity, "Rarity"))
+                {
+                    string formatted = formatRarity(_rarity.Text);
+                    bg_path = formatted;
+                }
+                else
+                {
+                    bg_path = "Common";
+                }
+            }
+
+
             string soundName = sound.Split("\\").Last().Split(".").First();
             string output = Path.Combine(".output", soundName + ".mp4");
             string img = Path.Combine(".output", soundName + ".png");
 
             // istantizes managers
-            ImageMaker imageMaker = new ImageMaker(texture, bg_path, soundName);
+            ImageMaker imageMaker = new ImageMaker(texture, bg_path, soundName, useRarity);
             VideoMaker videoMaker = new VideoMaker(ffmpeg, output, img, sound);
 
             Console.Write($"Starting making image for {loggers.typeDefinition(soundName)} ~ ");
@@ -115,9 +139,9 @@ public class Dataminer
 
             Console.WriteLine($"Starting making video for {loggers.typeDefinition(soundName)}..");
             videoMaker.MakeVideo();
-            Console.WriteLine("Video finished.");
             Console.WriteLine($"Output saved in {loggers.pathDefinition(output)}");
-            Console.ReadKey();
+
+            askAnotherPath(); // ask for another path
         }
 
         else
@@ -126,6 +150,29 @@ public class Dataminer
             Console.Write("Want to extract another file instead? (Y/N): ");
             askInError(Console.ReadLine());
             Environment.Exit(0);
+        }
+    }
+
+
+    private void askAnotherPath()
+    {
+        Console.Write("\nWant to extract another file? (Y/N): ");
+        string option = Console.ReadLine();
+
+        switch (option.ToLower())
+        {
+            case "y":
+                Console.Clear();
+                Console.Write($"Insert here a {loggers.pathDefinition("music pack or an emote path")}: ");
+                Extract(Console.ReadLine());
+                break;
+
+            default:
+                Console.WriteLine("Press any key for close the program.");
+                Console.ReadKey();
+                Log.Information("Program closed.");
+                Environment.Exit(0);
+                break;
         }
     }
 
@@ -140,12 +187,12 @@ public class Dataminer
                 break;
 
             default:
-                Console.WriteLine("Press a key for close the program.");
+                Console.WriteLine("Press any key for close the program.");
                 Console.ReadKey();
+                Log.Information("Program closed.");
                 Environment.Exit(0);
                 break;
         }
-        return;
     }
 
 
@@ -154,4 +201,11 @@ public class Dataminer
 
     private bool IsEmote(UObject _object) => _object.ExportType == "AthenaDanceItemDefinition";
 
+
+    private string formatRarity(string rarity)
+    {
+        if (!rarity.Contains("::")) return "Common";
+
+        return rarity.Split("::")[1];
+    }
 }

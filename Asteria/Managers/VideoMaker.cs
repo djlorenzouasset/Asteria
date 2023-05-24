@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Serilog;
 
 namespace Asteria.Managers;
 
@@ -20,6 +21,7 @@ public class VideoMaker
     public void MakeVideo()
     {
         string command = $"-y -loop 1 -framerate 1 -i \"{_image}\" -i \"{_audio}\" -map 0 -map 1:a -c:v libx264 -preset ultrafast -tune stillimage -vf fps=1,format=yuv420p -c:a aac -shortest -movflags +faststart \"{_output}\"";
+        Log.Information("Starting making video using terminal command \"{command}\"", command);
 
         ProcessStartInfo startInfo = new ProcessStartInfo(_ffmpeg_path);
         startInfo.Arguments = command;
@@ -31,5 +33,6 @@ public class VideoMaker
         process.Start();
 
         process.WaitForExit();
+        Log.Information("Video finished and saved in output folder as {audioPath}", _output);
     }
 }

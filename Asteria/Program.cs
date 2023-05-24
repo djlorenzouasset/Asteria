@@ -1,8 +1,9 @@
 ﻿using Newtonsoft.Json;
+using Serilog;
+
 using Asteria.Models;
 using Asteria.Rest;
 using Asteria.Managers;
-
 
 namespace Asteria;
 
@@ -13,9 +14,15 @@ public class Program
 
     public static void Main()
     {
+        // create logger
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Verbose()
+            .WriteTo.File(Path.Combine(DirectoryManager.logs, $"Asteria-Log-{DateTime.Now:dd-MM-yyyy}.txt"))
+            .CreateLogger();
+
+
         Console.Title = "Asteria";
         CreateFolders();
-
 
         #region user settings and other configuration
 
@@ -28,44 +35,57 @@ public class Program
         if (HaveSettings())
         {
             settings = LoadSettings();
+            Log.Information("Settings loaded.");
         }
-
         else
         {
+            bool useRarityBg = false;
+
             Console.Write($"Insert the path to your {logger.pathDefinition("game files")}: ");
             string filesPath = Console.ReadLine().Replace("\"", "");
 
-            Console.Write($"Insert the path for the {logger.pathDefinition("custom background")} to use: ");
-
-            // the image path have to be without white spaces 
-            // or the program will generate an exeption because
-            // it cant find the correct image
-            string bgPath = Console.ReadLine().Replace("\"", "");
+            Console.Write($"Insert the path for the {logger.pathDefinition("custom background")} to use or write " + logger.typeDefinition("rarity") +  " for use a background based on the cosmetic rarity: ");
+            string? bgPath = Console.ReadLine().Replace("\"", "");
 
 
-            if (!File.Exists(bgPath))
+            if (bgPath.ToLower() != "rarity")
             {
-                Console.WriteLine(logger.errorDefinition("Background not found. ") + "Press any key for close the program.");
-                Console.ReadKey();
-                Environment.Exit(0);
+                if (!File.Exists(bgPath))
+                {
+                    Log.Error("No background found at \"{insertedPath}\"", bgPath);
+                    Console.WriteLine(logger.errorDefinition("Background not found. ") + "Press any key for close the program.");
+                    Console.ReadKey();
+                    Environment.Exit(0);
+                }
+            }
+            else
+            {
+                bgPath = null;
+                useRarityBg = true;
             }
 
-            settings = new UserSettings() { path = filesPath, background = bgPath };
+            settings = new UserSettings() { path = filesPath, background = bgPath, useRarity = useRarityBg };
             SaveSettings(settings);
+            Log.Information("Settings saved");
         }
+
 
         #endregion
 
         if (ffmpeg is null) 
         {
+            Log.Error("FFMpeg not found in the pc, closing the program");
             Console.WriteLine(logger.errorDefinition("FFMpeg not found in this PC. Download it and try again."));
             Console.ReadKey();
+            Log.Information("Program closed.");
             Environment.Exit(0);
         }
 
         else 
         { 
             Console.WriteLine($"Downloading mappings in {logger.pathDefinition(DirectoryManager.mappings)} folder.");
+            Log.Information($"Downloading mappings in {DirectoryManager.mappings} folder.");
+
             string ? mappings = GetMappings();
 
             if (mappings is null)
@@ -76,18 +96,23 @@ public class Program
                     case "y":
                         Console.Write($"Insert the path to your {logger.pathDefinition("mappings file")}: ");
                         mappings = Console.ReadLine().Replace("\"", "");
+                        Log.Information("Loading mappings from file \"{mappingsPath}\"", mappings);
                         break;
 
                     default:
-                        Console.WriteLine("Press a key for close the program.");
+                        Console.WriteLine("Press any key for close the program.");
                         Console.ReadKey();
+                        Log.Information("Program closed.");
                         Environment.Exit(0);
                         break;
                 }
             }
 
+            bool useRarity = false;
+            if (settings.useRarity) useRarity = true;
+
             Dataminer dataminer = new Dataminer();
-            dataminer.Initialize(mappings, settings.path, ffmpeg, settings.background);
+            dataminer.Initialize(mappings, settings.path, ffmpeg, settings.background, useRarity);
         }
     }
 
@@ -109,6 +134,7 @@ public class Program
         {
             if (!Directory.Exists(folder))
             {
+                Log.Information("Creating missing directory {dirPath}", folder);
                 Directory.CreateDirectory(folder);
             }
             continue;
@@ -122,9 +148,10 @@ public class Program
         // Environment variables situated
         // in the pc. FFMpeg is required
         // for the video generation
-        string[] environmentsPaths = Environment.GetEnvironmentVariable("PATH").Split(";");
 
-        foreach (string environmentsPath in environmentsPaths)
+        string[] environmentPaths = Environment.GetEnvironmentVariable("PATH").Split(";");
+
+        foreach (string environmentsPath in environmentPaths)
         {
             string path = Path.Combine(environmentsPath, "ffmpeg.exe");
 

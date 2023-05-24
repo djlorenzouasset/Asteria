@@ -9,6 +9,7 @@ using CUE4Parse.FileProvider;
 using CUE4Parse_Conversion.Textures;
 using CUE4Parse.UE4.Assets.Exports.Texture;
 using Newtonsoft.Json;
+using Serilog;
 
 using Asteria.UTypes;
 using Asteria.Managers;
@@ -49,6 +50,7 @@ public class ExportPackage
     private void SavePackage(UObject _object)
     {
         File.WriteAllText(Path.Combine(DirectoryManager.cache, _object.Name + ".json"), JsonConvert.SerializeObject(_object, Formatting.Indented));
+        Log.Information("Saving package {pkgName} in {path}", _object.Name, Path.Combine(DirectoryManager.cache, _object.Name + ".json"));
     }
 
 
@@ -64,6 +66,7 @@ public class ExportPackage
         stream.CopyTo(file);
         stream.Close();
         file.Close();
+        Log.Information("Saved texture in {path}", savePath);
         return savePath;
     }
 
@@ -99,6 +102,7 @@ public class ExportPackage
         writer.Write(data);
         writer.Flush();
         writer.Close();
+        Log.Information("Saved sound in {path}", Path.Combine(DirectoryManager.cache, soundWave.Name + "." + format));
         return Path.Combine(DirectoryManager.cache, soundWave.Name + "." + format);
     }
 
@@ -152,6 +156,7 @@ public class ExportPackage
                 writer.Flush();
                 writer.Close();
                 finalPath = Path.Combine(DirectoryManager.cache, sound.SoundWave.Name + "." + format);
+                Log.Information("Sound saved in {path}", finalPath);
             }
         }
 
