@@ -17,7 +17,8 @@ public class Program
         // create logger
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Verbose()
-            .WriteTo.File(Path.Combine(DirectoryManager.logs, $"Asteria-Log-{DateTime.Now:dd-MM-yyyy}.txt"))
+            .WriteTo.File(Path.Combine(DirectoryManager.logs, $"Asteria-Log-{DateTime.Now:dd-MM-yyyy}.txt"), 
+                          outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}") // https://github.com/serilog/serilog/wiki/Configuration-Basics#output-templates
             .CreateLogger();
 
 
