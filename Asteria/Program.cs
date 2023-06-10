@@ -17,7 +17,7 @@ public class Program
         // create logger
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Verbose()
-            .WriteTo.File(Path.Combine(DirectoryManager.logs, $"Asteria-Log-{DateTime.Now:dd-MM-yyyy}.txt"), 
+            .WriteTo.File(Path.Combine(DirectoryManager.logs, $"Asteria-Log-{DateTime.Now:dd-MM-yyyy}.txt"),
                           outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}") // https://github.com/serilog/serilog/wiki/Configuration-Basics#output-templates
             .CreateLogger();
 
@@ -41,14 +41,34 @@ public class Program
         else
         {
             bool useRarityBg = false;
+            bool valid = false;
 
             Console.Write($"Insert the path to your {logger.pathDefinition("game files")}: ");
             string filesPath = Console.ReadLine().Replace("\"", "");
+            if (!Directory.Exists(filesPath))
+            {
+                Console.WriteLine("This path " + logger.errorDefinition("not exist"));
+                Console.WriteLine("Press any key for close the program.");
+                Console.ReadKey();
+                Environment.Exit(0);
+            }
+
+            string[] globalExist = Directory.GetFiles(filesPath);
+            foreach (string path in globalExist)
+            {
+                if (path.EndsWith(".utoc") || path.EndsWith(".ucas"))
+                    valid = true;
+            }
+            if (!valid) 
+            {
+                Console.WriteLine("This path " + logger.errorDefinition("have no paks."));
+                Console.WriteLine("Press any key for close the program.");
+                Console.ReadKey();
+                Environment.Exit(0);
+            }
 
             Console.Write($"Insert the path for the {logger.pathDefinition("custom background")} to use or write " + logger.typeDefinition("rarity") +  " for use a background based on the cosmetic rarity: ");
             string? bgPath = Console.ReadLine().Replace("\"", "");
-
-
             if (bgPath.ToLower() != "rarity")
             {
                 if (!File.Exists(bgPath))
@@ -117,6 +137,23 @@ public class Program
         }
     }
 
+
+    public static object getNewPath()
+    {
+        Console.Write($"Insert the path to your {logger.pathDefinition("game files")}: ");
+        string filesPath = Console.ReadLine().Replace("\"", "");
+
+        bool globalExist = Directory.GetFiles(filesPath).Contains("global.ucas");
+        if (!Directory.Exists(filesPath) || !globalExist)
+        {
+            return 0;
+        }
+        else
+        {
+            return filesPath;
+        }
+
+    }
 
     public static bool HaveSettings() => File.Exists("settings.json");
 
