@@ -31,7 +31,7 @@ public class Dataminer
         Console.Write("Initializing provider.. ");
         Console.WriteLine($"Loading Paks files from local directory {loggers.pathDefinition(filesPath)}");
 
-        _provider = new(filesPath, SearchOption.TopDirectoryOnly, true, new VersionContainer(EGame.GAME_UE5_3));
+        _provider = new(filesPath, SearchOption.TopDirectoryOnly, true, new VersionContainer(EGame.GAME_UE5_2));
         _provider.MappingsContainer = new FileUsmapTypeMappingsProvider(mappings);
         _provider.Initialize();
 

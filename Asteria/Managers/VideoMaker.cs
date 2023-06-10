@@ -25,8 +25,8 @@ public class VideoMaker
 
         ProcessStartInfo startInfo = new ProcessStartInfo(_ffmpeg_path);
         startInfo.Arguments = command;
-        startInfo.UseShellExecute = false;
-        startInfo.RedirectStandardOutput = false;
+        startInfo.UseShellExecute = true;
+        startInfo.RedirectStandardOutput = false; 
 
         Process process = new Process();
         process.StartInfo = startInfo;

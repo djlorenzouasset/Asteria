@@ -30,7 +30,7 @@ dotnet build
 
 ## Settings
 
-- When the program opens, will ask for your <b>local installation of Fortnite</b>. Insert the path and press enter. After this, the program will ask for a <b>custom background</b> (1920x1080 if possible). You can find good backgrounds in high quality on <a href='https://fortnite.gg/assets?category=backgrounds'>Fortnite.gg</a> or write "rarity" for use an automatic background based on the cosmetic rarity.
+- When the program opens, will ask for your <b>local installation of Fortnite</b> (Paks folder, should be `C:\Program Files\Epic Games\Fortnite\FortniteGame\Content\Paks` for everyone. Insert the path and press enter. After this, the program will ask for a <b>custom background</b> (1920x1080 if possible). You can find good backgrounds in high quality on <a href='https://fortnite.gg/assets?category=backgrounds'>Fortnite.gg</a> or write "rarity" for use an automatic background based on the cosmetic rarity.
 
 - When you completed these steps, the program will load local files and when finish you can insert a path for a Music Pack or an Emote (you search in Fortnite files with the help of <a href='https://github.com/4sval/FModel'>FModel</a>). Here is an example of the program when is ready to extract:
 
