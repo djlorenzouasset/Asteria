@@ -137,24 +137,6 @@ public class Program
         }
     }
 
-
-    public static object getNewPath()
-    {
-        Console.Write($"Insert the path to your {logger.pathDefinition("game files")}: ");
-        string filesPath = Console.ReadLine().Replace("\"", "");
-
-        bool globalExist = Directory.GetFiles(filesPath).Contains("global.ucas");
-        if (!Directory.Exists(filesPath) || !globalExist)
-        {
-            return 0;
-        }
-        else
-        {
-            return filesPath;
-        }
-
-    }
-
     public static bool HaveSettings() => File.Exists("settings.json");
 
 
