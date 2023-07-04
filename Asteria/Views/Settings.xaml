@@ -1,0 +1,111 @@
+﻿<adonisControls:AdonisWindow x:Class="Asteria.Views.Settings"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
+            xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+            xmlns:adonisExt="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI"
+            xmlns:cue4Parse="clr-namespace:CUE4Parse.UE4.Versions;assembly=CUE4Parse"
+            xmlns:converters="clr-namespace:Asteria.Converters"
+            Title="Settings"
+            Width="500"
+            SizeToContent="Height"
+            WindowStartupLocation="CenterScreen"
+            ResizeMode="NoResize"
+            Topmost="False">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{adonisUi:Space 1}" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{adonisUi:Space 1}" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="2" Margin="{adonisUi:Space 1}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="{adonisUi:Space 1}" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="{adonisUi:Space 1}" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="{adonisUi:Space 1}" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{adonisUi:Space 1}" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{adonisUi:Space 1}" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{adonisUi:Space 1}" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{adonisUi:Space 1}" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{adonisUi:Space 1}" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{adonisUi:Space 1}" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{adonisUi:Space 1}" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{adonisUi:Space 1}" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{adonisUi:Space 1}" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{adonisUi:Space 1}" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{adonisUi:Space 1}" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{adonisUi:Space 1}" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{adonisUi:Space 1}" />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="{adonisUi:Space 1}" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="{adonisUi:Space 1}" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="{adonisUi:Space 1}" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Game Version" VerticalAlignment="Center" />
+            <ComboBox Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" ItemsSource="{converters:EnumToItem {x:Type cue4Parse:EGame}}" SelectedItem="{Binding UEVersion, Converter={StaticResource EnumConverter}}" />
+
+            <TextBlock Grid.Row="8" Grid.Column="0" Text="Game Installation" VerticalAlignment="Center" />
+            <TextBox Grid.Row="8" Grid.Column="2" Text="{Binding PaksPath}" adonisExt:WatermarkExtension.Watermark="Paks Folder" />
+            <Button Grid.Row="8" Grid.Column="4" Content="..." Click="SelectPaksFolder"/>
+
+            <TextBlock Grid.Row="12" Grid.Column="0" Text="* Main Aes Key" VerticalAlignment="Center" />
+            <TextBox Grid.Row="12" Grid.Column="2" Text="{Binding MainKey}" adonisExt:WatermarkExtension.Watermark="Main Key 0x.. (optional)" />
+
+            <TextBlock Grid.Row="16" Grid.Column="0" Text="Custom Mappings File" VerticalAlignment="Center" />
+            <TextBox Grid.Row="16" Grid.Column="2" Text="{Binding Mappings}" adonisExt:WatermarkExtension.Watermark="Custom Mapping file" IsEnabled="{Binding CustomMappings}" />
+            <Button Grid.Row="16" Grid.Column="4" Content="..." Click="SelectMappingFile" IsEnabled="{Binding CustomMappings}"/>
+
+            <TextBlock Grid.Row="20" Grid.Column="0" Text="Custom Mappings" VerticalAlignment="Center" />
+            <ToggleButton Grid.Row="20" Grid.Column="2" Grid.ColumnSpan="3" Style="{DynamicResource {x:Static adonisUi:Styles.ToggleSwitch }}" IsChecked="{Binding UseCustomMappings}" />
+
+            <TextBlock Grid.Row="24" Grid.Column="0" Text="Background Path" VerticalAlignment="Center" />
+            <TextBox Grid.Row="24" Grid.Column="2" Text="{Binding Background}" adonisExt:WatermarkExtension.Watermark="Image background" IsEnabled="{Binding CustomBackground}" />
+            <Button Grid.Row="24" Grid.Column="4" Content="..." Click="SelectBackgroundFile" IsEnabled="{Binding CustomBackground}"/>
+
+            <TextBlock Grid.Row="28" Grid.Column="0" Text="Use Rarity Background" VerticalAlignment="Center" />
+            <ToggleButton Grid.Row="28" Grid.Column="2" Grid.ColumnSpan="3" Style="{DynamicResource {x:Static adonisUi:Styles.ToggleSwitch }}" IsChecked="{Binding UseRarityBackground}" />
+
+            <TextBlock Grid.Row="32" Grid.Column="0" Text="Discord Rich Presence" VerticalAlignment="Center" />
+            <ToggleButton Grid.Row="32" Grid.Column="2" Grid.ColumnSpan="3" Style="{DynamicResource {x:Static adonisUi:Styles.ToggleSwitch }}" IsChecked="{Binding UseDiscordPresence}" />
+
+        </Grid>
+
+        <Border Grid.Row="4" Background="{DynamicResource {x:Static adonisUi:Brushes.Layer1BackgroundBrush}}" adonisExt:LayerExtension.IncreaseLayer="True">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <TextBlock Text="* Requires a restart for changes to make effects" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <Button MinWidth="80" Margin="{adonisUi:Space 1}" Content="Save" Click="OnClickSave"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+    
+</adonisControls:AdonisWindow>

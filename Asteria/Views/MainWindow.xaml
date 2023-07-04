@@ -1,0 +1,66 @@
+﻿<adonisCtrls:AdonisWindow
+        x:Class="Asteria.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
+        xmlns:adonisCtrls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+        xmlns:adonisExtensions="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI"                              
+        Title="Asteria"
+        Width="450"
+        SizeToContent="Height"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{adonisUi:Space 1}" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{adonisUi:Space 1}" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{adonisUi:Space 1}" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0">
+            <MenuItem Header="Help">
+                <MenuItem Header="Github" Command="{Binding ClickedCommand}" CommandParameter="github_url" >
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/Github.png" Height="16" Width="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Twitter" Command="{Binding ClickedCommand}" CommandParameter="twitter_url" >
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/Twitter.png" Height="16" Width="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Support Server" Command="{Binding ClickedCommand}" CommandParameter="discord_url" >
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/Discord.png" Height="16" Width="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Changelog" Command="{Binding ClickedCommand}" CommandParameter="changeLog">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/ChangeLog.png" Height="16" Width="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Settings" Command="{Binding ClickedCommand}" CommandParameter="settings" />
+            <MenuItem Header="Check Updates" Command="{Binding ClickedCommand}" CommandParameter="updateCheck" />
+        </Menu>
+
+        <StackPanel Grid.Row="4">
+            <TextBlock Text="Insert here the path of a Music Pack or an Emote to create the video!" FontSize="12" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
+        </StackPanel>
+
+        <Grid Grid.Row="6" Margin="{adonisUi:Space 1}">
+            <TextBox Margin="{adonisUi:Space 1}" Grid.Row="4" Grid.Column="2" Text="{Binding CosmeticPath, UpdateSourceTrigger=PropertyChanged}" adonisExtensions:WatermarkExtension.Watermark="Path to file (Music Pack or Emote)" TextChanged="OnCosmeticPathChanged"/>
+        </Grid>
+
+        <Grid Grid.Row="8">
+            <Button Content="Create" MinWidth="80" Margin="{adonisUi:Space 1}" HorizontalAlignment="Center" IsEnabled="{Binding BoxNotEmpty}" Click="OnClickConvert" />
+        </Grid>
+    </Grid>
+
+</adonisCtrls:AdonisWindow>
