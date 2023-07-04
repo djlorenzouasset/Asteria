@@ -2,8 +2,6 @@
 
 namespace Asteria.UTypes;
 
-// sound class from Fortnite Porting
-
 public class Sound
 {
     public USoundWave? SoundWave;

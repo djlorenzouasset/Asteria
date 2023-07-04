@@ -1,7 +1,11 @@
-﻿// enums stuff for the exporter
-// with this the program handle 
-// operations within the Exporter
-// function in the Managers
+﻿namespace Asteria;
+
+public enum CosmeticTypes
+{
+    MusicPack,
+    Dance,
+    Invalid
+}
 
 public enum ExportType
 {
@@ -14,3 +18,4 @@ public enum SoundType
     Emote,
     MusicPack
 }
+
