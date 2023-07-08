@@ -54,13 +54,19 @@ public class Dataminer
     {
         UObject? exports = new();
 
+        if (!GetPathByAssetName(gameFilePath, out string? path))
+        {
+            AppVModel.OnPathNotFound($"No GameFile found for {gameFilePath}.");
+            return;
+        }
+
         try
         {
-            exports = Provider.LoadAllObjects(gameFilePath).FirstOrDefault();
+            exports = Provider.LoadAllObjects(path).FirstOrDefault();
         }
         catch (KeyNotFoundException)
         {
-            AppVModel.OnPathNotFound($"No GameFile found for {gameFilePath}.");
+            AppVModel.OnPathNotFound($"No GameFile found for {path}.");
             return;
         }
 
@@ -127,6 +133,20 @@ public class Dataminer
 
         AppVModel.FinishedVM.UpdateMessage($"The cosmetic {exports.Name} has been generated successfully!", textureBitmap);
         AppVModel.FinishedVM.outputPath = output;   
+    }
+
+    private bool GetPathByAssetName(string assetName, out string? path)
+    {
+        string name = assetName.ToLower().Replace(".uasset", ""); // remove the extension of the asset
+
+        var files = Provider?.Files.Values.Where(x => x.NameWithoutExtension.ToLower() == name || x.PathWithoutExtension.ToLower() == name);
+        if (files.Count() == 0)
+        {
+            path = null;
+            return false;
+        }
+        path = files.First().Path;
+        return true;
     }
 
     public CosmeticTypes GetExportType(UObject uObject)
