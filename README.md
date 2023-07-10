@@ -5,6 +5,7 @@ If you want contribute to the project, feel free to help!
 
 > ⚠️ If you encounter problems, I ask you to open an issue in the repository so I can fix it.
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/F1F6IB03D)
 
 # Install the program
 
