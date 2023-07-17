@@ -32,5 +32,6 @@ public static class WindowManager
     public static void StartProcess(string processName, bool shellExecute = true)
     {
         Process.Start(new ProcessStartInfo { FileName = processName, UseShellExecute = shellExecute });
+        Log.Information("Process Started: {processArg}", processName);
     }
 }
