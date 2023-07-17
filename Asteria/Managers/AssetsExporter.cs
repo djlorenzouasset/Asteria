@@ -80,7 +80,7 @@ public class AssetsExpoter
     private void SavePackage(UObject _object)
     {
         File.WriteAllText(Path.Combine(DirectoryManager.cache, _object.Name + ".json"), JsonConvert.SerializeObject(_object, Formatting.Indented));
-        Log.Information("Saved package {pkgName} in {path}", _object.Name, Path.Combine(DirectoryManager.cache, _object.Name + ".json"));
+        Log.Information("Saved package {pkgName} as {path}", _object.Name, Path.Combine(DirectoryManager.cache, _object.Name + ".json"));
     }
 
     private string? SaveTexture(UObject _object)
@@ -95,7 +95,7 @@ public class AssetsExpoter
         stream?.CopyTo(file);
         stream?.Close();
         file.Close();
-        Log.Information("Saved UTexture2D in {path}", savePath);
+        Log.Information("Saved UTexture2D as {path}", savePath);
         return savePath;
     }
 
@@ -130,7 +130,7 @@ public class AssetsExpoter
         writer.Write(data);
         writer.Flush();
         writer.Close();
-        Log.Information("Saved {soundType} in {path}", soundWave.ExportType, Path.Combine(DirectoryManager.cache, soundWave.Name + "." + format));
+        Log.Information("Saved {soundType} as {path}", soundWave.ExportType, Path.Combine(DirectoryManager.cache, soundWave.Name + "." + format));
         return Path.Combine(DirectoryManager.cache, soundWave.Name + "." + format);
     }
 
@@ -147,7 +147,6 @@ public class AssetsExpoter
         }
 
         var montageNotifies = montage.GetOrDefault("Notifies", new List<FAnimNotifyEvent>());
-
         foreach (var notify in montageNotifies)
         {
             var notifyName = notify.NotifyName.Text;
@@ -160,7 +159,6 @@ public class AssetsExpoter
         foreach (var soundNotify in soundNotifies)
         {
             var time = soundNotify.TriggerTimeOffset;
-
             var notifyData = soundNotify.NotifyStateClass.Load<UObject>();
             var firstNode = notifyData?.Get<USoundCue>("EmoteSound1P")?.FirstNode?.Load<USoundNode>();
             if (firstNode is null) continue;
@@ -184,7 +182,6 @@ public class AssetsExpoter
                 Log.Information("Saved {soundType} in {path}", sound.SoundWave.ExportType, finalPath);
             }
         }
-
         return finalPath;
     }
 
