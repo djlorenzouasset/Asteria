@@ -63,11 +63,6 @@ public static class Updater
             {
                 MessageBox.Show($"Asteria is up to date.\n\nCurrent version installed: {args.InstalledVersion}\nLatest version: {args.CurrentVersion} ({asteriaUpdate?.UpdateDate})", "Update check finished.", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            else if (UserSettings.Settings.ShowChangelog)
-            {
-                UserSettings.Settings.ShowChangelog = false;
-                WindowManager.Open<ChangeLog>();
-            }
             return;
         }
 

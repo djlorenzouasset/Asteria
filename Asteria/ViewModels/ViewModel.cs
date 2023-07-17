@@ -27,7 +27,6 @@ public class ViewModel
 
     public void MenuCommandHandler(string command)
     {
-        Log.Information("Starting process: {processName}", command);
         switch (command)
         {
             case "github_url":
@@ -44,14 +43,17 @@ public class ViewModel
 
             case "settings":
                 WindowManager.Open<Settings>();
+                Log.Information("Opened AppSettings Window.");
                 break;
 
             case "updateCheck":
+                Log.Information("Checking for updates.");
                 Updater.Check(true);
                 break;
 
             case "changeLog":
                 WindowManager.Open<ChangeLog>();
+                Log.Information("Opened ChangeLog Window.");
                 break;
         }
     }

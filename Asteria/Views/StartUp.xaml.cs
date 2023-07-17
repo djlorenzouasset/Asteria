@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using Asteria.Rest;
 using Asteria.Managers;
 using Asteria.ViewModels;
 
@@ -32,6 +33,7 @@ public partial class StartUp
     private async void OnClickContinue(object sender, RoutedEventArgs e)
     {
         Close();
+        Updater.updateNotes = await Endpoints.Asteria.GetChangelogAsync();
         await AppVModel.LoadingVM.InitializeProgram();
     }
 }

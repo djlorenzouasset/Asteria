@@ -31,6 +31,11 @@ public partial class Loading
         {
             Updater.Check();
         }
+        else if (UserSettings.Settings.ShowChangelog)
+        {
+            UserSettings.Settings.ShowChangelog = false;
+            WindowManager.Open<ChangeLog>();
+        }
 
         await AppVModel.LoadingVM.InitializeProgram();
     }
