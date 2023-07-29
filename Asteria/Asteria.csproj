@@ -6,9 +6,9 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
 	<AssemblyName>Asteria</AssemblyName>
-    <FileVersion>2.0.2.0</FileVersion>
-	<Version>2.0.2.0</Version>
-	<AssemblyVersion>2.0.2.0</AssemblyVersion>
+    <FileVersion>2.0.3.0</FileVersion>
+	<Version>2.0.3.0</Version>
+	<AssemblyVersion>2.0.3.0</AssemblyVersion>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     <ApplicationIcon>Resources\logo.ico</ApplicationIcon>
   </PropertyGroup>
@@ -22,7 +22,7 @@
     <PackageReference Include="AdonisUI.ClassicTheme" Version="1.17.1" />
     <PackageReference Include="Autoupdater.NET.Official" Version="1.8.3" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
-    <PackageReference Include="DiscordRichPresence" Version="1.1.4.20" />
+    <PackageReference Include="DiscordRichPresence" Version="1.2.1.24" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
     <PackageReference Include="RestSharp" Version="110.2.0" />
