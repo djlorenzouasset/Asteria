@@ -2,6 +2,7 @@
 using Asteria.Rest;
 using Asteria.Managers;
 using Asteria.ViewModels;
+using Asteria.Models;
 
 namespace Asteria.Views;
 
@@ -32,6 +33,12 @@ public partial class StartUp
 
     private async void OnClickContinue(object sender, RoutedEventArgs e)
     {
+        if (string.IsNullOrEmpty(UserSettings.Settings.PaksPath) || string.IsNullOrWhiteSpace(UserSettings.Settings.PaksPath))
+        {
+            AppVModel.Warn("Invalid Informations.", "The Path to the local installation you inserted is not valid.");
+            return;
+        }
+
         Close();
         Updater.updateNotes = await Endpoints.Asteria.GetChangelogAsync();
         await AppVModel.LoadingVM.InitializeProgram();
