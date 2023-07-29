@@ -44,6 +44,11 @@ public partial class UserSettings : ObservableObject
         }
     }
 
+    public static void ExtractFFmpegZip()
+    {
+        // TODO: Automatically save FFmpeg in the PC.
+    }
+
     [ObservableProperty] private string paksPath = string.Empty;
 
     [ObservableProperty] private string backgroundPath = string.Empty;
