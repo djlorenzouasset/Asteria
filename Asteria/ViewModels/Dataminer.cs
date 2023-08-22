@@ -15,14 +15,13 @@ using Asteria.Rest;
 using Asteria.Models;
 using Asteria.Managers;
 using Asteria.Views;
+using Asteria.Exporters;
 
 namespace Asteria.ViewModels;
 
 public class Dataminer 
 {
-    private DefaultFileProvider? Provider;
-
-    private AssetsExpoter assetsExporter;
+    public static DefaultFileProvider? Provider;
 
     public Dataminer()
     {
@@ -35,7 +34,6 @@ public class Dataminer
 
         Provider = new(UserSettings.Settings.PaksPath, SearchOption.TopDirectoryOnly, true);
         Provider.Versions = new VersionContainer(UserSettings.Settings.UeVersion);
-        assetsExporter = new AssetsExpoter(Provider);
     }
 
     public async Task Init()
@@ -77,8 +75,8 @@ public class Dataminer
             return;
         }
 
-        string? sound = (check == CosmeticTypes.Dance) ? assetsExporter.SavePackage(exports, ExportType.Sound, SoundType.Emote) : assetsExporter.SavePackage(exports, ExportType.Sound); ;
-        string? texture = assetsExporter.SavePackage(exports, ExportType.Texture);
+        string? sound = (check == CosmeticTypes.Dance) ? AssetsExpoter.SavePackage(exports, ExportType.Sound, SoundType.Emote) : AssetsExpoter.SavePackage(exports, ExportType.Sound); ;
+        string? texture = AssetsExpoter.SavePackage(exports, ExportType.Texture);
 
         if (texture is null)
         {
@@ -96,7 +94,7 @@ public class Dataminer
             WindowManager.Close<MainWindow>();
         });
 
-        BitmapImage? textureBitmap = assetsExporter.GetBitmapImage(exports);
+        BitmapImage? textureBitmap = Textures.GetBitmapImage(exports);
         AppVModel.CosmeticVM.Update($"Loading {exports.Name}", textureBitmap);
 
         switch (check)

@@ -5,11 +5,10 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    
-    <AssemblyName>Asteria</AssemblyName>
+	<AssemblyName>Asteria</AssemblyName>
     <FileVersion>2.0.3.0</FileVersion>
-    <Version>2.0.3.0</Version>
-    <AssemblyVersion>2.0.3.0</AssemblyVersion>
+	<Version>2.0.3.0</Version>
+	<AssemblyVersion>2.0.3.0</AssemblyVersion>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     <ApplicationIcon>Resources\logo.ico</ApplicationIcon>
   </PropertyGroup>

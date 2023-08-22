@@ -5,7 +5,7 @@ namespace Asteria;
 
 public static class Globals
 {
-    public const string ASTERIA_VERSION = "2.0.3";
+    public const string ASTERIA_VERSION = "2.0.3"; // moving to 2.0.4 when I'll release the full update
     public const string ASTERIA_INFOS = "https://djlorexzo.dev/asteria/api/infos.json";
     public const string CHANGELOG = "https://djlorexzo.dev/asteria/api/release.txt";
 
