@@ -2,104 +2,22 @@
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
-using System.Windows.Media.Imaging;
 using CUE4Parse.UE4.Assets.Exports;
-using CUE4Parse.UE4.Assets.Exports.Sound;
-using CUE4Parse.UE4.Assets.Exports.Sound.Node;
-using CUE4Parse.GameTypes.FN.Assets.Exports.Sound;
 using CUE4Parse_Conversion.Sounds;
 using CUE4Parse.UE4.Assets.Objects;
+using CUE4Parse.UE4.Assets.Exports.Sound;
 using CUE4Parse.UE4.Assets.Exports.Animation;
-using CUE4Parse.FileProvider;
-using CUE4Parse_Conversion.Textures;
-using CUE4Parse.UE4.Assets.Exports.Texture;
-using Newtonsoft.Json;
-using SkiaSharp;
+using CUE4Parse.UE4.Assets.Exports.Sound.Node;
+using CUE4Parse.GameTypes.FN.Assets.Exports.Sound;
+using Asteria.ViewModels;
 using Asteria.UTypes;
+using Asteria.Managers;
 
-namespace Asteria.Managers;
+namespace Asteria.Exporters;
 
-public class AssetsExpoter
+public static class Sounds
 {
-    private DefaultFileProvider? Provider;
-
-    public AssetsExpoter(DefaultFileProvider _provider)
-    {
-        Provider = _provider;
-    }
-
-    public BitmapImage? GetBitmapImage(UObject _object)
-    {
-        try
-        {
-            if (!_object.TryGetValue(out UTexture2D? texture, "LargePreviewImage")) return null;
-            else if (texture == null) return null;
-
-            var decoded = texture.Decode(ETexturePlatform.DesktopMobile);
-            if (decoded == null) return null;
-
-            var bitmap = decoded.Encode(SKEncodedImageFormat.Png, 100);
-            var stream = new MemoryStream(bitmap.ToArray(), false);
-            var finished = new BitmapImage();
-            finished.BeginInit();
-            finished.CacheOption = BitmapCacheOption.OnLoad;
-            finished.StreamSource = stream;
-            finished.EndInit();
-            finished.Freeze();
-            return finished;
-        }
-        catch
-        {
-            return null;
-        }
-    }
-
-    public string? SavePackage(UObject _object, ExportType exportType, SoundType soundType = SoundType.MusicPack)
-    {
-        SavePackage(_object);
-        if (exportType == ExportType.Sound && soundType == SoundType.Emote)
-        {
-            return SaveSoundEmote(_object);
-        }
-        else if (exportType == ExportType.Sound && soundType == SoundType.MusicPack)
-        {
-            return SaveSound(_object);
-        }
-        else if (exportType == ExportType.Texture)
-        {
-            return SaveTexture(_object);
-        }
-        else
-        {
-            // exception for debug
-            Log.Error("Invalid operation");
-            throw new Exception("Invalid operation");
-        }
-    }
-
-    private void SavePackage(UObject _object)
-    {
-        File.WriteAllText(Path.Combine(DirectoryManager.cache, _object.Name + ".json"), JsonConvert.SerializeObject(_object, Formatting.Indented));
-        Log.Information("Saved package {pkgName} as {path}", _object.Name, Path.Combine(DirectoryManager.cache, _object.Name + ".json"));
-    }
-
-    private string? SaveTexture(UObject _object)
-    {
-        if (!_object.TryGetValue(out UTexture2D texture, "LargePreviewImage")) return null;
-
-        var savePath = Path.Combine(DirectoryManager.cache, texture.Name + ".png");
-        var decoded = texture.Decode(ETexturePlatform.DesktopMobile);
-        var encoded = decoded?.Encode(SkiaSharp.SKEncodedImageFormat.Png, 100);
-        var file = File.Create(savePath);
-        var stream = encoded?.AsStream();
-        stream?.CopyTo(file);
-        stream?.Close();
-        file.Close();
-        Log.Information("Saved UTexture2D as {path}", savePath);
-        return savePath;
-    }
-
-    private string? SaveSound(UObject _object)
+    public static string? SaveSound(UObject _object)
     {
         if (!_object.TryGetValue(out UObject soundPath, "FrontEndLobbyMusic"))
         {
@@ -107,7 +25,7 @@ public class AssetsExpoter
         }
 
         string soundDefinition = soundPath.GetPathName().Split(".").First() + ".uasset";
-        UObject? _sound = Provider?.LoadAllObjects(soundDefinition).LastOrDefault();
+        UObject? _sound = Dataminer.Provider?.LoadAllObjects(soundDefinition).LastOrDefault();
 
         if (_sound is null || _sound.ExportType != "SoundNodeWavePlayer")
         {
@@ -136,7 +54,7 @@ public class AssetsExpoter
 
     // https://github.com/halfuwu/FortnitePorting/blob/master/FortnitePorting/Exports/Types/DanceExportData.cs#L36
     // thanks to half for the help on this 
-    private string? SaveSoundEmote(UObject _object)
+    public static string? SaveSoundEmote(UObject _object)
     {
         string? finalPath = null;
         var soundNotifies = new List<FAnimNotifyEvent>();
@@ -187,7 +105,7 @@ public class AssetsExpoter
 
     // https://github.com/halfuwu/FortnitePorting/blob/master/FortnitePorting/Exports/ExportHelpers.cs#L899
     // thanks to Half for the sound exporter 
-    private List<Sound> HandleAudioTree(USoundNode node, float offset = 0f)
+    private static List<Sound> HandleAudioTree(USoundNode node, float offset = 0f)
     {
         var sounds = new List<Sound>();
         Random RandomGenerator = new();
@@ -241,13 +159,13 @@ public class AssetsExpoter
         return sounds;
     }
 
-    private Sound LoadSound(USoundNodeWavePlayer player, float timeOffset = 0)
+    private static Sound LoadSound(USoundNodeWavePlayer player, float timeOffset = 0)
     {
         var soundWave = player.SoundWave?.Load<USoundWave>();
         return new Sound(soundWave, timeOffset, player.GetOrDefault("bLooping", false));
     }
 
-    private Sound LoadSound(USoundWave soundWave, float timeOffset = 0)
+    private static Sound LoadSound(USoundWave soundWave, float timeOffset = 0)
     {
         return new Sound(soundWave, timeOffset, false);
     }

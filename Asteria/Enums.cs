@@ -1,21 +1,21 @@
 ﻿namespace Asteria;
 
-public enum CosmeticTypes
+public enum CosmeticTypes : byte
 {
-    MusicPack,
-    Dance,
-    Invalid
+    MusicPack = 0,
+    Dance = 1,
+    Invalid = 2
 }
 
-public enum ExportType
+public enum ExportType : byte
 {
-    Texture,
-    Sound
+    Texture = 0,
+    Sound = 1
 }
 
-public enum SoundType
+public enum SoundType : byte
 {
-    Emote,
-    MusicPack
+    Emote = 0,
+    MusicPack = 1
 }
 
