@@ -25,7 +25,7 @@ public static class Sounds
         }
 
         string soundDefinition = soundPath.GetPathName().Split(".").First() + ".uasset";
-        UObject? _sound = Dataminer.Provider?.LoadAllObjects(soundDefinition).LastOrDefault();
+        UObject? _sound = AppVModel.Dataminer.Provider?.LoadAllObjects(soundDefinition).LastOrDefault();
 
         if (_sound is null || _sound.ExportType != "SoundNodeWavePlayer")
         {

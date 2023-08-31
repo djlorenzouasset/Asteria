@@ -22,12 +22,12 @@ public class ImageMaker
     {
         SKBitmap? background;
 
-        if (UserSettings.Settings.RarityBackground)
+        if (UserSettings.Settings.ImageDesign == Design.RarityBackground)
         {
             byte[]? rarityBg = Resources.Resource.ResourceManager.GetObject(_rarity) as byte[];
             background = SKBitmap.Decode(rarityBg);
         }
-        else if (!UserSettings.Settings.RarityBackground && string.IsNullOrEmpty(UserSettings.Settings.BackgroundPath))
+        else if (UserSettings.Settings.ImageDesign == Design.CustomBackground && string.IsNullOrEmpty(UserSettings.Settings.BackgroundPath))
         {
             Log.Warning("Rarity background is disabled and a custom background is not set. Using Cosmetic Rarity instead, make sure to change this setting.");
             byte[]? rarityBg = Resources.Resource.ResourceManager.GetObject(_rarity) as byte[];
@@ -39,12 +39,11 @@ public class ImageMaker
         }
 
         SKBitmap? icon = SKBitmap.Decode(_image); // this sometimes return null idk why
-
         var surface = SKSurface.Create(new SKImageInfo(background.Width, background.Height));
         var canvas = surface.Canvas;
         canvas.DrawBitmap(background, new SKRect(0, 0, background.Width, background.Height));
 
-        float scale = Math.Min((float)background.Width / icon.Width, (float)background.Height / icon.Height) * 0.6f;
+        float scale = Math.Min((float)background.Width / icon.Width, (float)background.Height / icon.Height) * 0.4f;
         int newWidth = (int)(icon.Width * scale);
         int newHeight = (int)(icon.Height * scale);
         float x = (background.Width - newWidth) / 2;

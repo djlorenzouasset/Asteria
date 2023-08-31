@@ -7,6 +7,7 @@ namespace Asteria.Managers;
 
 public static class DirectoryManager
 {
+    public static string chunks = Path.Combine(Environment.CurrentDirectory, ".data");
     public static string cache = Path.Combine(Environment.CurrentDirectory, ".cache");
     public static string output = Path.Combine(Environment.CurrentDirectory, ".output");
     public static string mappings = Path.Combine(Environment.CurrentDirectory, ".mappings");
@@ -15,7 +16,7 @@ public static class DirectoryManager
 
     public static void CreateFolders()
     {
-        string[] folders = { cache, mappings, output, logs, data };
+        string[] folders = { chunks, cache, mappings, output, logs, data };
 
         foreach (string folder in folders)
         {
@@ -37,7 +38,6 @@ public static class DirectoryManager
             selectedFolder = fileExplorer.SelectedPath;
             return true;
         }
-
         selectedFolder = string.Empty;
         return false;
     }
@@ -54,7 +54,6 @@ public static class DirectoryManager
             selectedFile = fileExplorer.FileName;
             return true;
         }
-
         selectedFile = string.Empty;
         return false;
     }
@@ -69,7 +68,6 @@ public static class DirectoryManager
             mappingsPath = recent.FullName;
             return true;
         }
-
         mappingsPath = string.Empty;
         return false;
     }

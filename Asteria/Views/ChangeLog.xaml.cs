@@ -5,15 +5,8 @@ namespace Asteria.Views;
 
 public partial class ChangeLog
 {
-    public string VersionTitle
-    {
-        get => "ASTERIA v" + Globals.ASTERIA_VERSION;
-    }
-
-    public string ChangeLogText
-    {
-        get => Updater.updateNotes;
-    }
+    public string VersionTitle => "ASTERIA v" + Globals.ASTERIA_VERSION;
+    public string ChangeLogText => Updater.updateNotes;
 
     public ChangeLog()
     {

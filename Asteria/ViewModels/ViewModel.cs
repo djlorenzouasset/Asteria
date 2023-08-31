@@ -14,15 +14,10 @@ namespace Asteria.ViewModels;
 public class ViewModel
 {
     public MainViewModel MainVM;
-
     public LoadingViewModel LoadingVM;
-
     public SettingsViewModel SettingsVM;
-
     public Dataminer Dataminer;
-
     public CosmeticLoadingViewModel CosmeticVM;
-
     public FinishedViewModel FinishedVM;
 
     public void MenuCommandHandler(string command)
@@ -122,16 +117,16 @@ public class ViewModel
         });
     }
 
-    public void OnInvalidCosmeticType(string got, string expected, string cosmeticId)
+    public void OnInvalidCosmeticType(string cosmeticId)
     {
-        Log.Warning($"{cosmeticId}: Got {got}, Expected {expected}");
+        Log.Warning($"{cosmeticId}: Not a valid Music Pack or Emote.");
 
         Application.Current.Dispatcher.Invoke(() =>
         {
             var messageBox = new MessageBoxModel
             {
                 Caption = "Invalid Cosmetic Type!",
-                Text = $"This cosmetic is not a Music Pack // Emote (Got {got}, Expected {expected}).\n\nWant generate another cosmetic instead?",
+                Text = $"This cosmetic is not a Music Pack // Emote.\n\nWant generate another cosmetic instead?",
                 Icon = MessageBoxImage.Warning,
                 Buttons = MessageBoxButtons.YesNo()
             };
@@ -155,5 +150,26 @@ public class ViewModel
     public void Quit()
     {
         Application.Current.Shutdown();
+    }
+
+    public void Quit(string errorTitle, string errorMessage)
+    {
+        Application.Current.Dispatcher.Invoke(() =>
+        {
+            var messageBox = new MessageBoxModel
+            {
+                Caption = errorTitle,
+                Text = errorMessage,
+                Icon = MessageBoxImage.Error,
+                Buttons = new[] { new MessageBoxButtonModel("Open Settings", MessageBoxResult.Custom), new MessageBoxButtonModel("Quit", MessageBoxResult.Cancel) }
+            };
+            MessageBox.Show(messageBox);
+            if (messageBox.Result == MessageBoxResult.Custom)
+            {
+                WindowManager.Open<Settings>();
+                return;
+            }
+            Quit();
+        });
     }
 }

@@ -41,7 +41,7 @@ public partial class App
             throw new Exception("FFMpeg not found in this PC. Download it and try again.");
         }
 
-        if (UserSettings.Settings.DiscordPresence)
+        if (UserSettings.Settings.DiscordPresence == DiscordPresence.Always)
         {
             Discord.Initialize();
         }

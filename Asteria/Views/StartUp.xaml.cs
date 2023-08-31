@@ -33,7 +33,7 @@ public partial class StartUp
 
     private async void OnClickContinue(object sender, RoutedEventArgs e)
     {
-        if (string.IsNullOrEmpty(UserSettings.Settings.PaksPath) || string.IsNullOrWhiteSpace(UserSettings.Settings.PaksPath))
+        if (UserSettings.Settings.InstallType is EInstallType.LocalArchives && string.IsNullOrEmpty(UserSettings.Settings.PaksPath))
         {
             AppVModel.Warn("Invalid Informations.", "The Path to the local installation you inserted is not valid.");
             return;
