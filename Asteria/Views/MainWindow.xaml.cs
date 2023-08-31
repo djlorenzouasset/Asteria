@@ -17,7 +17,7 @@ public partial class MainWindow
 
     private void OnCosmeticPathChanged(object sender, TextChangedEventArgs e)
     {
-        if (!string.IsNullOrEmpty(AppVModel.MainVM.CosmeticPath))
+        if (!string.IsNullOrEmpty(AppVModel.MainVM.Cosmetic))
         {
             AppVModel.MainVM.BoxNotEmpty = true;
         }
@@ -31,7 +31,7 @@ public partial class MainWindow
     {
         Task.Run(() =>
         {
-            AppVModel.Dataminer.Extract(AppVModel.MainVM.CosmeticPath);
+            AppVModel.MainVM.Execute(AppVModel.MainVM.Cosmetic);
         });
     }
 }

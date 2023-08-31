@@ -5,11 +5,8 @@ namespace Asteria.ViewModels;
 
 public partial class CosmeticLoadingViewModel : ObservableObject
 {
-    [ObservableProperty]
-    private string cosmeticId;
-
-    [ObservableProperty]
-    private BitmapImage cosmeticIcon;
+    [ObservableProperty] private string cosmeticId;
+    [ObservableProperty] private BitmapImage cosmeticIcon;
 
     public void Update(string cosmetic, BitmapImage? icon = null)
     {

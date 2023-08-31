@@ -6,15 +6,11 @@ namespace Asteria.ViewModels;
 
 public partial class FinishedViewModel : ObservableObject
 {
-    [ObservableProperty]
-    private string? messageText;
-
-    [ObservableProperty]
-    private BitmapImage? image;
-
     private RelayCommand<string>? clickedCommand;
-
     public IRelayCommand<string> ClickedCommand => clickedCommand ??= new RelayCommand<string>(AppVModel.MenuCommandHandler);
+
+    [ObservableProperty] private string? messageText;
+    [ObservableProperty] private BitmapImage? image;
 
     public string? outputPath;
 

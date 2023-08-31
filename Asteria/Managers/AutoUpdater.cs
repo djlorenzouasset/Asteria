@@ -5,16 +5,13 @@ using AutoUpdaterDotNET;
 using Newtonsoft.Json;
 using Asteria.Models;
 using Asteria.Rest;
-using Asteria.Views;
 
 namespace Asteria.Managers;
 
 public static class Updater
 {
     public static AsteriaUpdate? asteriaUpdate;
-
     public static string? updateNotes;
-
     private static bool isFromMenu = false;
 
     public static void Initialize()

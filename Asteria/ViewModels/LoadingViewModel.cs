@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Asteria.Managers;
 using Asteria.Views;
+using Asteria.Managers;
 
 using MessageBox = AdonisUI.Controls.MessageBox;
 using MessageBoxImage = AdonisUI.Controls.MessageBoxImage;
@@ -45,9 +45,16 @@ public partial class LoadingViewModel : ObservableObject
         if (Updater.asteriaUpdate?.Notice.Title is not null)
         {
             var data = Updater.asteriaUpdate.Notice;
-            var icon = (bool)data.Warn ? MessageBoxImage.Warning : MessageBoxImage.Information;
-
+            var icon = data.Warn ? MessageBoxImage.Warning : MessageBoxImage.Information;
             MessageBox.Show(data.Text, data.Title, MessageBoxButton.OK, icon);
+        }
+
+        if (AppVModel.Dataminer.AssetsError)
+        {
+            AppVModel.Warn(
+                "Errors accoured while loading.",
+                "Asset Registries were not loaded correctly. It will not be possible to search for cosmetics by name or ID until the AES Key is available."
+            );
         }
     }
 }

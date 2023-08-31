@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
+using System.Diagnostics;
 
 namespace Asteria.Managers;
 
