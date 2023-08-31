@@ -2,6 +2,7 @@
 using System.IO;
 using CUE4Parse.UE4.Assets.Exports;
 using Newtonsoft.Json;
+using Asteria.Models;
 using Asteria.Managers;
 
 namespace Asteria.Exporters;
@@ -10,7 +11,9 @@ public static class AssetsExpoter
 {
     public static string? SavePackage(UObject _object, ExportType exportType, SoundType soundType = SoundType.MusicPack)
     {
-        SavePackage(_object);
+        if (UserSettings.Settings.SaveRawData) 
+            SavePackage(_object);
+
         if (exportType == ExportType.Sound && soundType == SoundType.Emote)
         {
             return Sounds.SaveSoundEmote(_object);
