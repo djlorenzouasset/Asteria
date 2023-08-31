@@ -4,7 +4,44 @@
                     xmlns:adonisConverters="clr-namespace:AdonisUI.Converters;assembly=AdonisUI"
                     xmlns:adonisExtensions="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI"
                     xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI">
+    
+    <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    
+    <!-- https://github.com/halfuwu/FortnitePorting/blob/master/FortnitePorting/Resources/Resources.xaml#L31C1-L63C13 -->
+    <Style x:Key="NamedSeparator" TargetType="Separator" BasedOn="{StaticResource {x:Type Separator}}">
+        <Setter Property="Background" Value="{DynamicResource {x:Static adonisUi:Brushes.Layer1BorderBrush}}" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static adonisUi:Brushes.ForegroundBrush}}" />
+        <Setter Property="Margin" Value="0 8" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Separator}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
+                        <Separator Grid.Column="0" VerticalAlignment="Center" Margin="0"
+                                   Background="{TemplateBinding Background}"
+                                   Foreground="{TemplateBinding Foreground}" />
+                        <TextBlock x:Name="TagTextBlock" Grid.Column="1" VerticalAlignment="Center" Text="{TemplateBinding Tag}"
+                                   FontWeight="SemiBold" FontSize="11" Margin="10 0" />
+                        <Separator Grid.Column="2" VerticalAlignment="Center" Margin="0"
+                                   Background="{TemplateBinding Background}"
+                                   Foreground="{TemplateBinding Foreground}" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Text" SourceName="TagTextBlock" Value="">
+                            <Setter Property="Margin" TargetName="TagTextBlock" Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <!-- from FModel https://github.com/4sval/FModel/blob/master/FModel/Views/Resources/Resources.xaml#L915 (i was lazy for rewrite it) -->
     <Style x:Key="{x:Type MenuItem}" TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
         <Setter Property="Template">

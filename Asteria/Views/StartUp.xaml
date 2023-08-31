@@ -4,6 +4,9 @@
               xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
               xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
               xmlns:adonisExt="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI"
+              xmlns:converters="clr-namespace:Asteria.Converters"
+              xmlns:install="clr-namespace:Asteria"
+              xmlns:cue4Parse="clr-namespace:CUE4Parse.UE4.Versions;assembly=CUE4Parse"
               Title="First StartUp"
               Width="500"
               SizeToContent="Height"
@@ -22,7 +25,7 @@
 
         <StackPanel Grid.Row="0">
             <TextBlock FontSize="20" HorizontalAlignment="Center" Text="Asteria" />
-            <TextBlock Margin="10, 0, 10, 0" TextAlignment="Center" Text="Please choose your local installation and the other settings for use Asteria." TextWrapping="WrapWithOverflow" />
+            <TextBlock Margin="10, 0, 10, 0" TextAlignment="Center" Text="Welcome to Asteria. Choose your settings for a better experience and click continue for start the program." TextWrapping="WrapWithOverflow" />
         </StackPanel>
 
         <Grid Grid.Row="2" Margin="{adonisUi:Space 1}">
@@ -32,8 +35,6 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="{adonisUi:Space 1}" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="{adonisUi:Space 1}" />
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="{adonisUi:Space 1}" />
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="{adonisUi:Space 1}" />
@@ -58,19 +59,30 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="4" Grid.Column="0" Text="Game Installation" VerticalAlignment="Center" />
-            <TextBox x:Name="PaksPath" Grid.Row="4" Grid.Column="2" Text="{Binding PaksPath}" adonisExt:WatermarkExtension.Watermark="Paks Folder" />
-            <Button Grid.Row="4" Grid.Column="4" Content="..." Click="SelectPaksFolder"/>
+            <Separator Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Style="{StaticResource NamedSeparator}" Tag="FORTNITE" />
+            
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Installation Type" VerticalAlignment="Center" />
+            <ComboBox Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3" ItemsSource="{converters:EnumToItem {x:Type install:EInstallType}}" SelectedItem="{Binding InstallType, Converter={StaticResource EnumConverter}}" />
 
-            <TextBlock Grid.Row="8" Grid.Column="0" Text="Background Path" VerticalAlignment="Center" />
-            <TextBox x:Name="Background" Grid.Row="8" Grid.Column="2" Text="{Binding Background}" adonisExt:WatermarkExtension.Watermark="Image background" IsEnabled="{Binding CustomBackground}" />
-            <Button Grid.Row="8" Grid.Column="4" Content="..." Click="SelectBackgroundFile" IsEnabled="{Binding CustomBackground}"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Assets Language" VerticalAlignment="Center" />
+            <ComboBox Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" ItemsSource="{converters:EnumToItem {x:Type cue4Parse:ELanguage}}" SelectedItem="{Binding LocalizationLanguage, Converter={StaticResource EnumConverter}}" />
 
-            <TextBlock Grid.Row="12" Grid.Column="0" Text="Use Rarity Background" VerticalAlignment="Center" />
-            <ToggleButton Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="3" Style="{DynamicResource {x:Static adonisUi:Styles.ToggleSwitch }}" IsChecked="{Binding UseRarityBackground}" />
+            <TextBlock Grid.Row="6" Grid.Column="0" Text="Game Installation" VerticalAlignment="Center" />
+            <TextBox Grid.Row="6" Grid.Column="2" Text="{Binding PaksPath}" adonisExt:WatermarkExtension.Watermark="Paks Folder" IsEnabled="{Binding SelectorsEnabled}"/>
+            <Button Grid.Row="6" Grid.Column="4" Content="..." Click="SelectPaksFolder" IsEnabled="{Binding SelectorsEnabled}"/>
 
-            <TextBlock Grid.Row="16" Grid.Column="0" Text="Discord Rich Presence" VerticalAlignment="Center" />
-            <ToggleButton Grid.Row="16" Grid.Column="2" Grid.ColumnSpan="3" Style="{DynamicResource {x:Static adonisUi:Styles.ToggleSwitch }}" IsChecked="{Binding UseDiscordPresence}" />
+            <Separator Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="6" Style="{StaticResource NamedSeparator}" Tag="OTHER" />
+
+            <TextBlock Grid.Row="10" Grid.Column="0" Text="Discord Rich Presence" VerticalAlignment="Center" />
+            <ComboBox Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="3" ItemsSource="{converters:EnumToItem {x:Type install:DiscordPresence}}" SelectedItem="{Binding DiscordPresence, Converter={StaticResource EnumConverter}}" />
+            
+            <TextBlock Grid.Row="12" Grid.Column="0" Text="Design" VerticalAlignment="Center" />
+            <ComboBox Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="3" ItemsSource="{converters:EnumToItem {x:Type install:Design}}" SelectedItem="{Binding ImageDesign, Converter={StaticResource EnumConverter}}" />
+
+            <TextBlock Grid.Row="14" Grid.Column="0" Text="Background Path" VerticalAlignment="Center" Visibility="{Binding CustomBackground, Converter={StaticResource BoolToVisibilityConverter}}" />
+            <TextBox Grid.Row="14" Grid.Column="2" Text="{Binding Background}" adonisExt:WatermarkExtension.Watermark="Image background" Visibility="{Binding CustomBackground, Converter={StaticResource BoolToVisibilityConverter}}" />
+            <Button Grid.Row="14" Grid.Column="4" Content="..." Click="SelectBackgroundFile" Visibility="{Binding CustomBackground, Converter={StaticResource BoolToVisibilityConverter}}" />
+
         </Grid>
 
         <Border Grid.Row="4" Background="{DynamicResource {x:Static adonisUi:Brushes.Layer1BackgroundBrush}}" adonisExt:LayerExtension.IncreaseLayer="True">

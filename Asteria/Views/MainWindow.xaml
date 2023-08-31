@@ -51,11 +51,11 @@
         </Menu>
 
         <StackPanel Grid.Row="4">
-            <TextBlock Text="Insert here the path of a Music Pack or an Emote to create the video!" FontSize="12" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
+            <TextBlock Text="Insert here the name or the id/path of a Music Pack or an Emote to create the video!" FontSize="11" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
         </StackPanel>
 
         <Grid Grid.Row="6" Margin="{adonisUi:Space 1}">
-            <TextBox Margin="{adonisUi:Space 1}" Grid.Row="4" Grid.Column="2" Text="{Binding CosmeticPath, UpdateSourceTrigger=PropertyChanged}" adonisExtensions:WatermarkExtension.Watermark="Path to file (Music Pack or Emote)" TextChanged="OnCosmeticPathChanged"/>
+            <TextBox Margin="{adonisUi:Space 1}" Grid.Row="4" Grid.Column="2" Text="{Binding Cosmetic, UpdateSourceTrigger=PropertyChanged}" adonisExtensions:WatermarkExtension.Watermark="Name or id/path of the cosmetic" TextChanged="OnCosmeticPathChanged"/>
         </Grid>
 
         <Grid Grid.Row="8">
