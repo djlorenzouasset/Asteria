@@ -6,7 +6,7 @@ namespace Asteria;
 public static class Globals
 {
     // utils
-    public const string ASTERIA_VERSION = "2.1.0"; 
+    public const string ASTERIA_VERSION = "2.1.1"; 
     public const string APP_ID = "1122321007286427741";
 
     // endpoints
