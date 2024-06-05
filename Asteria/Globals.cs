@@ -6,10 +6,10 @@ namespace Asteria;
 public static class Globals
 {
     // utils
-    public const string ASTERIA_VERSION = "2.1.1"; 
+    public const string ASTERIA_VERSION = "2.1.1 [DEPRECATED]"; 
     public const string APP_ID = "1122321007286427741";
 
-    // endpoints
+    // endpoints (not working anymore)
     public const string ASTERIA_INFOS = "https://djlorexzo.dev/asteria/api/infos.json";
     public const string CHANGELOG = "https://djlorexzo.dev/asteria/api/release.txt";
     public const string MAPPINGS = "https://fortnitecentral.genxgames.gg/api/v1/mappings";
