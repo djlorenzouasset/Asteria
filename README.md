@@ -1,7 +1,9 @@
-# Asteria
+# Asteria [DEPRECATED]
 
 An open-source program that allow you to generate audio-videos of Music Packs and Emotes of Fortnite.
-If you want contribute to the project, feel free to help! 
+
+> [!NOTE]
+> This repository is not maintained anymore and no support will be provided.
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/F1F6IB03D)
 
